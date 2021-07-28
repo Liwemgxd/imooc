@@ -1,2 +1,30 @@
 <!--pages/hot/hot.wxml-->
-<text>liwemg</text>
+<view class="tabs">
+  <view wx:for="{{rankTypes}}" wx:key="*this" class="tab {{type === item.type? 'tab-active': ''}}" data-type="{{item.type}}"  bindtap="handleTabChange">
+    {{item.title}}
+    <view wx:if="{{type === item.type}}" class="active-bar"></view>
+  </view>  
+</view>
+
+<view class="time">
+  <view wx:for="{{rankPeriods}}" wx:key="value" class="period {{period === item.value? 'time-active':''}}" data-value="{{item.value}}" bindtap="handlePeriodChange">
+    {{item.title}}
+  </view>
+</view>
+ 
+<view class="list">
+  <view wx:for="{{currentList}}" wx:key="*this" class="list-item">
+    <image class="list-item-img" src="{{item.imgUrl}}"></image>
+    <view class="list-item-title">
+      <view class="list-item-title-inner">{{item.title}}</view>  
+    </view>
+    <view class="list-item-number">
+      <image wx:if="{{index === 0}}" class="list-item-number-img" src="../../resources/first.png"></image>
+      <image wx:elif="{{index === 1}}" class="list-item-number-img" src="../../resources/second.png"></image>
+      <image wx:elif="{{index === 2}}" class="list-item-number-img" src="../../resources/third.png"></image>
+      <!-- <image wx:else class="list-item-number-img" src="">{{index}}</image> -->
+      <view wx:else class="list-item-number-common">{{index+1}}</view>
+    </view>
+  </view>
+
+</view>
