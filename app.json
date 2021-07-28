@@ -1,7 +1,9 @@
 {
-  "entryPagePath": "pages/index/index",
+  "entryPagePath": "pages/hot/hot",
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/person/person",
+    "pages/hot/hot"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -10,7 +12,28 @@
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": false
   },
-
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./resources/home.png",
+        "selectedIconPath": "./resources/home-active.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "购物车",
+        "iconPath": "./resources/cart.png",
+        "selectedIconPath": "./resources/cart-active.png"
+      },
+      {
+        "pagePath": "pages/person/person",
+        "text": "我的",
+        "iconPath": "./resources/my.png",
+        "selectedIconPath": "./resources/my-active.png"
+      }
+    ]
+  },
   "style": "v2",
   "sitemapLocation": "sitemap.json"
 }

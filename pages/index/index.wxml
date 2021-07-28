@@ -5,37 +5,17 @@
 </view>
 
 <view class="navigator">
-  <view class="navigator-item">
-    <image class="navigator-image" src="../../resources/recommend.png"></image>
-    推荐
-    <view class="navigator-active"></view>
-  </view>
-  <view class="navigator-item">
-    <image class="navigator-image" src="../../resources/path.png"></image>
-    路径
-  </view>
-  <view class="navigator-item">
-    <image class="navigator-image" src="../../resources/project.png"></image>
-    实战
-  </view>
-  <view class="navigator-item">
-    <image class="navigator-image" src="../../resources/activity.png"></image>
-    活动
+  <view wx:for="{{tabs}}" wx:key="type" data-type="{{item.type}}" bindtap="changeType" class="navigator-item">
+    <image class="navigator-image" src="../../resources/{{item.type}}.png"></image>
+    {{item.name}}
+    <view hidden="{{type !== item.type}}" class="navigator-active navigator-active-{{item.type}}"></view>
   </view>
 </view>
 
-<swiper class="swiper" previous-margin="18rpx" next-margin="12rpx" circular="true" autoplay="true">
-  <swiper-item class="swiper-item">
-    <image class="swiper-image" src="http://img.mukewang.com/60fe479409cd280118000600.png"></image>
-  </swiper-item>
-  <swiper-item class="swiper-item">
-    <image class="swiper-image" src="http://img.mukewang.com/60f4e6b9098b660418000600.png"></image>
-  </swiper-item>
-  <swiper-item class="swiper-item">
-    <image class="swiper-image" src="http://img.mukewang.com/60ee4c3b0933e44800000000.png"></image>
-  </swiper-item>
-</swiper>
+<include src="./recommend.wxml"/>
+<include src="./activity.wxml"/>
 
-<view class="project">
-  <text class="project-title">实战推荐</text>
-</view>
+
+
+<block wx:if="{{type === 'path'}}">路径内容</block>
+<block wx:if="{{type === 'project'}}">实战内容</block>
