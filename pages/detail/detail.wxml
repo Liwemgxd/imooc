@@ -1,0 +1,3 @@
+<!--pages/detail/detail.wxml-->
+
+<view class="person">detail {{id}}</view>

@@ -1,9 +1,10 @@
 {
-  "entryPagePath": "pages/hot/hot",
+  "entryPagePath": "pages/index/index",
   "pages": [
     "pages/index/index",
     "pages/person/person",
-    "pages/hot/hot"
+    "pages/hot/hot",
+    "pages/detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

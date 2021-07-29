@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    type: 'project',
+    type: undefined,
     rankTypes: [
       {
         title: '实战排行',
@@ -16,7 +16,7 @@ Page({
         type: 'path'
       }
     ],
-    period: 'week',
+    period: undefined,
     rankPeriods: [
       {
         title: '周',
@@ -27,89 +27,31 @@ Page({
         value: 'month'
       }
     ],
-    currentList: [{
-      imgUrl: 'https://img1.mukewang.com/szimg/5f1eafb709e18bf912000676.png',
-      title: '前端性能优化--6大角度综合型优化方案',
-    }, {
-      imgUrl: 'https://img2.mukewang.com/szimg/5c18d2d8000141c506000338.jpg',
-      title: '剑指Java面试-Offer直通车',
-    }, {
-      imgUrl: 'https://img4.mukewang.com/szimg/5ac2dfe100014a9005400300.jpg',
-      title: 'Vue2.5 开发去哪儿网App',
-    }, {
-      imgUrl: 'https://img3.mukewang.com/szimg/5d1032ab08719e0906000338.jpg',
-      title: '计算机组成原理+操作系统+计算机网络',
-    },{
-      imgUrl: 'https://img1.mukewang.com/szimg/5f3cdd710925166812000676.png',
-      title: 'Spark Streaming',
-    }],
-    listData: { 
-      projectWeek: [{
-        imgUrl: 'https://img1.mukewang.com/szimg/5f1eafb709e18bf912000676.png',
-        title: '前端性能优化--6大角度综合型优化方案',
-      }, {
-        imgUrl: 'https://img2.mukewang.com/szimg/5c18d2d8000141c506000338.jpg',
-        title: '剑指Java面试-Offer直通车',
-      }, {
-        imgUrl: 'https://img4.mukewang.com/szimg/5ac2dfe100014a9005400300.jpg',
-        title: 'Vue2.5 开发去哪儿网App',
-      }, {
-        imgUrl: 'https://img3.mukewang.com/szimg/5d1032ab08719e0906000338.jpg',
-        title: '计算机组成原理+操作系统+计算机网络',
-      },{
-        imgUrl: 'https://img1.mukewang.com/szimg/5f3cdd710925166812000676.png',
-        title: 'Spark Streaming',
-      }],
-      projectMonth: [{
-        imgUrl: 'https://img1.mukewang.com/szimg/5f1eafb709e18bf912000676.png',
-        title: '前端性能优化--6大角度综合型优化方案',
-      }, {
-        imgUrl: 'https://img3.mukewang.com/szimg/5d1032ab08719e0906000338.jpg',
-        title: '计算机组成原理+操作系统+计算机网络',
-      }, {
-        imgUrl: 'https://img4.mukewang.com/szimg/5ac2dfe100014a9005400300.jpg',
-        title: 'Vue2.5 开发去哪儿网App',
-      }, {
-        imgUrl: 'https://img1.mukewang.com/szimg/5f3cdd710925166812000676.png',
-        title: 'Spark Streaming',
-      },{
-        imgUrl: 'https://img2.mukewang.com/szimg/5c18d2d8000141c506000338.jpg',
-        title: '剑指Java面试-Offer直通车',
-      }],
-      pathWeek: [{
-        imgUrl: 'https://img3.mukewang.com/szimg/5d1032ab08719e0906000338.jpg',
-        title: '计算机组成原理+操作系统+计算机网络',
-      }, {
-        imgUrl: 'https://img4.mukewang.com/szimg/5ac2dfe100014a9005400300.jpg',
-        title: 'Vue2.5 开发去哪儿网App',
-      }, {
-        imgUrl: 'https://img1.mukewang.com/szimg/5f3cdd710925166812000676.png',
-        title: 'Spark Streaming',
-      },{
-        imgUrl: 'https://img2.mukewang.com/szimg/5c18d2d8000141c506000338.jpg',
-        title: '剑指Java面试-Offer直通车',
-      },{
-        imgUrl: 'https://img1.mukewang.com/szimg/5f1eafb709e18bf912000676.png',
-        title: '前端性能优化--6大角度综合型优化方案',
-      }],
-      pathMonth: [{
-        imgUrl: 'https://img4.mukewang.com/szimg/5ac2dfe100014a9005400300.jpg',
-        title: 'Vue2.5 开发去哪儿网App',
-      }, {
-        imgUrl: 'https://img3.mukewang.com/szimg/5d1032ab08719e0906000338.jpg',
-        title: '计算机组成原理+操作系统+计算机网络',
-      },{
-        imgUrl: 'https://img1.mukewang.com/szimg/5f3cdd710925166812000676.png',
-        title: 'Spark Streaming',
-      },{
-        imgUrl: 'https://img2.mukewang.com/szimg/5c18d2d8000141c506000338.jpg',
-        title: '剑指Java面试-Offer直通车',
-      },{
-        imgUrl: 'https://img1.mukewang.com/szimg/5f1eafb709e18bf912000676.png',
-        title: '前端性能优化--6大角度综合型优化方案',
-      }]
-    }
+    currentList: [],
+    "listData": {}
   },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log('load');
+    wx.request({
+      url: 'https://www.fastmock.site/mock/3318e12fecf0186fad855028d64347e9/weixin/api/getRecommend',
+      success: (res)=>{
+        console.log(res);
+        const {data: {data}} = res;
+        this.setData({listData: data});
+        const period = wx.getStorageSync('period') || 'week';
+        const type = wx.getStorageSync('type') || 'project';
+        this.setData({
+          period,
+          type
+        })
+        this.changeCurrentList(type, period);
+      }
+    })
+  }, 
   changeCurrentList(type, period){
     let currentList = [];
     if(type === 'project' && period === 'week'){
@@ -118,17 +60,19 @@ Page({
       currentList = this.data.listData.projectMonth;
     }else if(type === 'path' && period === 'week'){
       currentList = this.data.listData.pathWeek;
-    }else{
+    }else if(type === 'path' && period === 'month'){
       currentList = this.data.listData.pathMonth;
     }
     this.setData({currentList})
   },
+
   handleTabChange(e){
     let type = e.currentTarget.dataset.type;
     let period = this.data.period;
     this.setData({
       type: type
     })
+    wx.setStorageSync('type', type);
     this.changeCurrentList(type, period);
   },
 
@@ -138,25 +82,11 @@ Page({
     this.setData({
       period: period
     });
+    wx.setStorageSync('period', period)
     this.changeCurrentList(type, period)
   },
 
 
-
-
-
-
-
-
-
-
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

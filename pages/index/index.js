@@ -51,5 +51,12 @@ Page({
   changeType(e){
     let type = e.currentTarget.dataset.type;
     this.setData({type})
+  },
+
+  handleCourseTap(e){
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/pages/detail/detail?id=${id}`,
+    })
   }
 })
